@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'rest_framework',
     'django.contrib.staticfiles',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ################ Custom middleware ################
+    'django.contrib.auth.middleware.RemoteUserMiddleware',
 ]
 
 ROOT_URLCONF = 'backend_gftify.urls'
@@ -122,3 +125,35 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+############### Custom settings ###############
+
+AUTH_USER_MODEL = 'users.User'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.RemoteUserBackend',
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+JWT_AUTH = {
+    'JWT_PAYLOAD_GET_USERNAME_HANDLER':
+        'users.utils.jwt_get_username_from_payload_handler',
+    'JWT_DECODE_HANDLER':
+        'users.utils.jwt_decode_token',
+    'JWT_ALGORITHM': 'RS256',
+    'JWT_AUDIENCE': 'https://giftifydrf/api',
+    'JWT_ISSUER': 'https://dev-1mmthtapaiep0dct.us.auth0.com/',
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+}
