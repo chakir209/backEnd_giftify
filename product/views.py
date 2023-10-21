@@ -6,17 +6,17 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Product
-from quickstart.serializers import CadeauSerializer
+from product.serializers import ProductSerializer
 
 @api_view(['GET', 'POST'])
 def liste_products(request):
     if request.method == 'GET':
         cadeaux = Product.objects.all()
-        serializer = CadeauSerializer(cadeaux, many=True)
+        serializer = ProductSerializer(cadeaux, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = CadeauSerializer(data=request.data)
+        serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -27,11 +27,11 @@ def detail_products(request, pk):
     cadeau = get_object_or_404(Product, pk=pk)
 
     if request.method == 'GET':
-        serializer = CadeauSerializer(cadeau)
+        serializer = ProductSerializer(cadeau)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = CadeauSerializer(cadeau, data=request.data)
+        serializer = ProductSerializer(cadeau, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

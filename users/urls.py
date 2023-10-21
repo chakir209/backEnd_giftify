@@ -11,10 +11,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('api/', views.UserViewSet.as_view({'get': 'list'})),
-    path('api/<int:pk>',
+    path('', views.UserViewSet.as_view({'get': 'list'})),
+    path('<int:pk>',
          views.UserViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update'})),
-    path('api/public', views.public),
-    path('api/private', views.private),
-    path('api/private-scoped', views.private_scoped),
+    path('public', views.public),
+    path('private', views.private),
+    path('private-scoped', views.private_scoped),
 ]
