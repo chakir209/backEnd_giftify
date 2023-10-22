@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'rest_framework',
     'django.contrib.staticfiles',
+    'corsheaders',
     'users',
     'product',
 ]
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     ################ Custom middleware ################
     'django.contrib.auth.middleware.RemoteUserMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'backend_gftify.urls'
@@ -158,3 +160,8 @@ JWT_AUTH = {
     'JWT_ISSUER': 'https://dev-1mmthtapaiep0dct.us.auth0.com/',
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 }
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]

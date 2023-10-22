@@ -13,7 +13,7 @@ from . import views
 urlpatterns = [
     path('', views.UserViewSet.as_view({'get': 'list'})),
     path('<int:pk>',
-         views.UserViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update'})),
+         views.UserViewSet.as_view({'get': 'retrieve', 'patch': 'partial_update'})),
     path('public', views.public),
     path('private', views.private),
     path('private-scoped', views.private_scoped),
